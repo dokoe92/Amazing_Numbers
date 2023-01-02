@@ -6,9 +6,38 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 //        write your code here
-        checkIfBuzz();
+        console();
     }
 
+    public static void console() {
+        int input = 0;
+        try {
+            System.out.println("Enter a natural number: ");
+            input = new Scanner(System.in).nextInt();
+            if (input < 1) {
+                System.out.println("This number is not natural!");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("not a number!");
+        }
+        System.out.println("Properties of " + input);
+        System.out.println("even: " + NumberChecker.isEven(input));
+        System.out.println("odd: " + NumberChecker.isOdd(input));
+        System.out.println("buzz: " + NumberChecker.isBuzz(input));
+        System.out.println("duck: " + NumberChecker.isDuck(input));
+
+
+    }
+}
+
+
+
+
+
+
+
+
+    /*
     public static void checkIfBuzz() {
         int input = 0;
         try {
@@ -55,12 +84,9 @@ public class Main {
         } else {
             System.out.println(input + " is neither divisible by 7 nor does it end with 7");
         }
+    }*/
 
 
 
 
-    }
 
-
-
-}
