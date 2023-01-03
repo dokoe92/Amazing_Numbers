@@ -46,6 +46,18 @@ public class NumberChecker {
         StringBuilder reverseNumber = new StringBuilder(numberAsString).reverse();
         return numberAsString.contentEquals(reverseNumber);
     }
+
+    public static boolean isGapful(long input) {
+        String inputToString = Long.toString(input);
+        if (inputToString.length() >= 3) {
+            int firstDigit = Character.getNumericValue(inputToString.charAt(0));
+            int lastDigit = Character.getNumericValue(inputToString.charAt(inputToString.length()-1));
+            String divisorSTring = Integer.toString(firstDigit) + Integer.toString(lastDigit);
+            int divisor = Integer.parseInt(divisorSTring);
+            return input % divisor == 0;
+        }
+        return false;
+    }
 }
 
 
