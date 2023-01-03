@@ -1,6 +1,5 @@
 package numbers;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -14,7 +13,6 @@ public class Console {
     }
 
 
-
     public void printConsole() {
         System.out.println("Welcome to Amazing Numbers!");
         System.out.println("Supported requests: ");
@@ -22,15 +20,16 @@ public class Console {
         System.out.println("- enter two natural numbers to obtain the properties of the list");
         System.out.println(" * the first parameter represents a starting number");
         System.out.println(" * the second parameters shows how many consecutive numbers are to be processed");
+        System.out.println("- two natural numbers and a property to search for");
         System.out.println("- separate the parameters with one space");
         System.out.println("- enter 0 to exit");
-        while(true) {
+        while (true) {
             System.out.println("Enter a request: ");
             try {
                 Scanner scanner = new Scanner(System.in);
                 String inputString = scanner.nextLine();
                 String[] splitString = inputString.split("\\s+");
-                 for (int i = 0; i < splitString.length; i++) {
+                for (int i = 0; i < splitString.length; i++) {
                     numbers[i] = Long.parseLong(splitString[i]);
                 }
 
@@ -41,14 +40,13 @@ public class Console {
                     } else if (numbers[0] < 1) {
                         System.out.println("The first parameter should be a natural number or zero.");
                     } else {
-                            singleInput();
+                        propertyOf();
                     }
-                }
-                else {
+                } else {
                     if (numbers[1] < 1) {
                         System.out.println("The second parameter should be a natural number");
                     } else {
-                        doubleInput();
+                        propertyOfList();
                     }
                     numbers[1] = null;
                 }
@@ -56,10 +54,10 @@ public class Console {
                 System.out.println("The first parameter should be a natural number or zero.");
             }
         }
-
     }
 
-    public void singleInput() {
+
+    public void propertyOf() {
         long input = this.numbers[0];
         System.out.println("Properties of " + input);
         System.out.println("buzz: " + NumberChecker.isBuzz(input));
@@ -70,17 +68,17 @@ public class Console {
         System.out.println("gapful: " + NumberChecker.isGapful(input));
     }
 
-    public void doubleInput() {
+    public void propertyOfList() {
         long length = this.numbers[1];
         long startNumber = this.numbers[0];
-        doubleInputOutputText(startNumber);
+        propertyOfListOutput(startNumber);
         for (int i = 1; i < length; i++) {
             long nextNumber = startNumber + i;
-            doubleInputOutputText(nextNumber);
+            propertyOfListOutput(nextNumber);
         }
     }
 
-    public void doubleInputOutputText(long number) {
+    public void propertyOfListOutput(long number) {
         String buzz = NumberChecker.isBuzz(number) ? "buzz" : "";
         String duck = NumberChecker.isDuck(number) ? "duck" : "";
         String palindrom = NumberChecker.isPalindrom(number) ? "palindromic" : "";
@@ -88,11 +86,9 @@ public class Console {
         String even = NumberChecker.isEven(number) ? "even" : "";
         String odd = NumberChecker.isOdd(number) ? "odd" : "";
 
-
         System.out.println(number + " is " + buzz + " " + duck + " " + palindrom + " " + gapful + " " + even + " " + odd);
 
     }
-
 
 
 
