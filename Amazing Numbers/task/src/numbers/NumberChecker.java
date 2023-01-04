@@ -58,6 +58,21 @@ public class NumberChecker {
         }
         return false;
     }
+
+    public static boolean isSpy(long input) {
+        long sum = 0;
+        long product = 1;
+        long digit;
+
+        while (input > 0) {
+            digit = input % 10;
+            sum += digit;
+            product *= digit;
+            input = input / 10;
+        }
+        return sum == product;
+
+    }
 }
 
 

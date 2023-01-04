@@ -1,15 +1,16 @@
 package numbers;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Console {
+public class Display {
 
     Long[] numbers;
+    Util util;
 
-    public Console() {
+    public Display() {
         this.numbers = new Long[2];
+        util = new Util();
     }
 
 
@@ -23,42 +24,39 @@ public class Console {
         System.out.println("- two natural numbers and a property to search for");
         System.out.println("- separate the parameters with one space");
         System.out.println("- enter 0 to exit");
-        while (true) {
-            System.out.println("Enter a request: ");
-            try {
-                Scanner scanner = new Scanner(System.in);
-                String inputString = scanner.nextLine();
-                String[] splitString = inputString.split("\\s+");
-                for (int i = 0; i < splitString.length; i++) {
-                    numbers[i] = Long.parseLong(splitString[i]);
-                }
 
-                if (numbers[1] == null) {
-                    if (numbers[0] == 0) {
-                        System.out.println("GoodBye!");
-                        System.exit(0);
-                    } else if (numbers[0] < 1) {
-                        System.out.println("The first parameter should be a natural number or zero.");
-                    } else {
-                        propertyOf();
-                    }
-                } else {
-                    if (numbers[1] < 1) {
-                        System.out.println("The second parameter should be a natural number");
-                    } else {
-                        propertyOfList();
-                    }
-                    numbers[1] = null;
-                }
-            } catch (InputMismatchException | NumberFormatException e) {
-                System.out.println("The first parameter should be a natural number or zero.");
+        while (true) {
+            String input = getInput();
+            Request request = util.processInput(input);
+
+            switch (request) {
+                case EMPTY -> printConsole();
+                case INVALID_NUMBER1 -> System.out.println("The first parameter should be a natural number or zero.");
+                case ONE_NUMBER -> propertyOf(util.parseToLong(util.inputValues.get(0)));
+                case INVALID_NUMBER2 -> System.out.println("The second parameter should be a natural number");
+                case TWO_NUMBERS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)));
+                case ZERO -> System.exit(0);
+
+
             }
         }
     }
 
+    public String getInput() {
+        System.out.println("Enter a request: ");
+        Scanner scanner = new Scanner(System.in);
+        String inputValue = scanner.nextLine();
+        String[] stringArr = inputValue.split(" ");
+        if (!util.isValidNumber(stringArr[0])) {
+            return "";
+        } else {
+            return inputValue;
+        }
 
-    public void propertyOf() {
-        long input = this.numbers[0];
+    }
+
+
+    public void propertyOf(Long input) {
         System.out.println("Properties of " + input);
         System.out.println("buzz: " + NumberChecker.isBuzz(input));
         System.out.println("duck: " + NumberChecker.isDuck(input));
@@ -68,9 +66,7 @@ public class Console {
         System.out.println("gapful: " + NumberChecker.isGapful(input));
     }
 
-    public void propertyOfList() {
-        long length = this.numbers[1];
-        long startNumber = this.numbers[0];
+    public void propertyOfList(long startNumber, long length) {
         propertyOfListOutput(startNumber);
         for (int i = 1; i < length; i++) {
             long nextNumber = startNumber + i;
@@ -89,8 +85,6 @@ public class Console {
         System.out.println(number + " is " + buzz + " " + duck + " " + palindrom + " " + gapful + " " + even + " " + odd);
 
     }
-
-
 
 
 }
