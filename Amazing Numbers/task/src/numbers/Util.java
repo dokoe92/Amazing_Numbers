@@ -47,6 +47,17 @@ public class Util {
                 } else {
                     return Request.INVALID_NUMBER2;
             }
+            case 3:
+                if (isValidNumber(inputValues.get(1)) ) {
+
+                    if (isValidProperty(inputValues.get(2).toUpperCase())) {
+                        return Request.THREE_INPUTS;
+                    } else {
+                        return Request.INVALID_PROPERTY;
+                    }
+                } else {
+                    return Request.INVALID_NUMBER2;
+                }
             default:
                 return Request.EMPTY;
         }
@@ -61,6 +72,17 @@ public class Util {
         } catch (InputMismatchException | NumberFormatException e) {
             return false;
         }
+    }
+
+    public boolean isValidProperty(String input) {
+        for (Property property : Property.values() ) {
+            if (property.toString().equals(input)) {
+                return true;
+            }
+        }
+        System.out.println("The property [" + input + "] is wrong.");
+        System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, EVEN, ODD]");
+        return false;
     }
 
     public long parseToLong(String input) {

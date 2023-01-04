@@ -1,5 +1,7 @@
 package numbers;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,7 +11,6 @@ public class Display {
     Util util;
 
     public Display() {
-        this.numbers = new Long[2];
         util = new Util();
     }
 
@@ -35,6 +36,7 @@ public class Display {
                 case ONE_NUMBER -> propertyOf(util.parseToLong(util.inputValues.get(0)));
                 case INVALID_NUMBER2 -> System.out.println("The second parameter should be a natural number");
                 case TWO_NUMBERS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)));
+                case THREE_INPUTS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)), util.inputValues.get(2));
                 case ZERO -> System.exit(0);
 
 
@@ -64,6 +66,7 @@ public class Display {
         System.out.println("even: " + NumberChecker.isEven(input));
         System.out.println("odd: " + NumberChecker.isOdd(input));
         System.out.println("gapful: " + NumberChecker.isGapful(input));
+        System.out.println("spy: " + NumberChecker.isSpy(input));
     }
 
     public void propertyOfList(long startNumber, long length) {
@@ -74,6 +77,28 @@ public class Display {
         }
     }
 
+    public void propertyOfList(long startNumber, long length, String property) {
+        ArrayList<Number> numbersWithProperty = new ArrayList<>();
+        int counter = 0;
+        long nextNumber = new Number(startNumber).getNumber();
+        boolean foundNumbersWithProperties = false;
+
+        while (!foundNumbersWithProperties) {
+            if (new Number(nextNumber).getProperties().get(property.toUpperCase())) {
+                numbersWithProperty.add(new Number(nextNumber));
+                counter++;
+            }
+            nextNumber++;
+            if (counter == length) {
+                foundNumbersWithProperties = true;
+            }
+        }
+
+        for (Number number : numbersWithProperty) {
+            System.out.println(number.printNumber());
+        }
+    }
+
     public void propertyOfListOutput(long number) {
         String buzz = NumberChecker.isBuzz(number) ? "buzz" : "";
         String duck = NumberChecker.isDuck(number) ? "duck" : "";
@@ -81,10 +106,11 @@ public class Display {
         String gapful = NumberChecker.isGapful(number) ? "gapful" : "";
         String even = NumberChecker.isEven(number) ? "even" : "";
         String odd = NumberChecker.isOdd(number) ? "odd" : "";
+        String spy = NumberChecker.isSpy(number) ? "spy" : "";
 
-        System.out.println(number + " is " + buzz + " " + duck + " " + palindrom + " " + gapful + " " + even + " " + odd);
-
+        System.out.println(number + " is " + buzz + " " + duck + " " + palindrom + " " + gapful + " " + spy + " " + even + " " + odd);
     }
+
 
 
 }
