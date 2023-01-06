@@ -23,6 +23,7 @@ public class Display {
         System.out.println(" * the first parameter represents a starting number");
         System.out.println(" * the second parameters shows how many consecutive numbers are to be processed");
         System.out.println("- two natural numbers and a property to search for");
+        System.out.println("- two natural numbers and two properties to search for;");
         System.out.println("- separate the parameters with one space");
         System.out.println("- enter 0 to exit");
 
@@ -37,6 +38,11 @@ public class Display {
                 case INVALID_NUMBER2 -> System.out.println("The second parameter should be a natural number");
                 case TWO_NUMBERS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)));
                 case THREE_INPUTS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)), util.inputValues.get(2));
+                case FOUR_INPUTS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)), util.inputValues.get(2), util.inputValues.get(3));
+                case MUTUALLY_EXCLUSIVE -> {
+                    System.out.println("The request contains mutually exclusive properties: [" + util.inputValues.get(2) + ", " + util.inputValues.get(3) + "]");
+                    System.out.println("There are no numbers with these properties");
+                }
                 case ZERO -> System.exit(0);
 
 
@@ -67,6 +73,8 @@ public class Display {
         System.out.println("odd: " + NumberChecker.isOdd(input));
         System.out.println("gapful: " + NumberChecker.isGapful(input));
         System.out.println("spy: " + NumberChecker.isSpy(input));
+        System.out.println("sunny: " + NumberChecker.isSunny(input));
+        System.out.println("square: " + NumberChecker.isSquare(input));
     }
 
     public void propertyOfList(long startNumber, long length) {
@@ -99,6 +107,29 @@ public class Display {
         }
     }
 
+    public void propertyOfList(long startNumber, long length, String property1, String property2) {
+        ArrayList<Number> numbersWithProperty = new ArrayList<>();
+        int counter = 0;
+        long nextNumber = new Number(startNumber).getNumber();
+        boolean foundNumbersWithProperties = false;
+
+        while (!foundNumbersWithProperties) {
+            Number numberToCheck = new Number(nextNumber);
+            if ((numberToCheck.getProperties().get(property1.toUpperCase()) && (numberToCheck.getProperties().get(property2.toUpperCase())))) {
+                numbersWithProperty.add(numberToCheck);
+                counter++;
+            }
+            nextNumber++;
+            if (counter == length) {
+                foundNumbersWithProperties = true;
+            }
+        }
+
+        for (Number number : numbersWithProperty) {
+            System.out.println(number.printNumber());
+        }
+    }
+
     public void propertyOfListOutput(long number) {
         String buzz = NumberChecker.isBuzz(number) ? "buzz" : "";
         String duck = NumberChecker.isDuck(number) ? "duck" : "";
@@ -107,10 +138,10 @@ public class Display {
         String even = NumberChecker.isEven(number) ? "even" : "";
         String odd = NumberChecker.isOdd(number) ? "odd" : "";
         String spy = NumberChecker.isSpy(number) ? "spy" : "";
+        String sunny = NumberChecker.isSunny(number) ? "sunny" : "";
+        String square = NumberChecker.isSquare(number) ? "square" : "";
 
-        System.out.println(number + " is " + buzz + " " + duck + " " + palindrom + " " + gapful + " " + spy + " " + even + " " + odd);
+        System.out.println(number + " is " + buzz + " " + duck + " " + palindrom + " " + gapful + " " + spy + " " + sunny + " " + square + " " +  even + " " + odd);
     }
-
-
 
 }

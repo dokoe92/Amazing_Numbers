@@ -78,6 +78,17 @@ public class NumberChecker {
         }
 
     }
+
+    public static boolean isSunny(long input) {
+        long nPlusOne = input + 1;
+        double getRoot = Math.sqrt(nPlusOne);
+        return getRoot == (int) getRoot;
+    }
+
+    public static boolean isSquare(long input) {
+        double getRoot = Math.sqrt(input);
+        return getRoot == (int) getRoot;
+    }
 }
 
 

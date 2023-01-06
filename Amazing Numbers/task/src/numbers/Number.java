@@ -11,6 +11,8 @@ public class Number {
     private boolean isPalindromic;
     private boolean isGapful;
     private boolean isSpy;
+    private boolean isSunny;
+    private boolean isSquare;
     private HashMap<String, Boolean> properties;
 
     public Number(long number) {
@@ -22,6 +24,8 @@ public class Number {
         this.isPalindromic = NumberChecker.isPalindrom(this.number);
         this.isGapful = NumberChecker.isGapful(this.number);
         this.isSpy = NumberChecker.isSpy(this.number);
+        this.isSunny = NumberChecker.isSunny(this.number);
+        this.isSquare = NumberChecker.isSquare(this.number);
         this.properties = new HashMap<>();
         setProperties();
     }
@@ -42,6 +46,8 @@ public class Number {
         this.properties.put("PALINDROMIC", this.isPalindromic);
         this.properties.put("GAPFUL", this.isGapful);
         this.properties.put("SPY", this.isSpy);
+        this.properties.put("SUNNY", this.isSunny);
+        this.properties.put("SQUARE", this.isSquare);
     }
 
     public StringBuilder printNumber() {
@@ -52,8 +58,11 @@ public class Number {
         sb.append(this.isPalindromic ? "palindrom " : "");
         sb.append(this.isGapful ? "gapful " : "");
         sb.append(this.isSpy ? "spy " : "");
+        sb.append(this.isSunny ? "sunny " : "");
+        sb.append(this.isSquare ? "suare " : "");
         sb.append(this.isEven ? "even " : "");
         sb.append(this.isOdd ? "odd " : "");
+
         return sb;
 
     }

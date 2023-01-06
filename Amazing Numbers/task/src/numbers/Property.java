@@ -7,5 +7,7 @@ public enum Property {
     DUCK,
     PALINDROMIC,
     GAPFUL,
-    SPY
+    SPY,
+    SUNNY,
+    SQUARE
 }
