@@ -2,6 +2,7 @@ package numbers;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -37,12 +38,8 @@ public class Display {
                 case ONE_NUMBER -> propertyOf(util.parseToLong(util.inputValues.get(0)));
                 case INVALID_NUMBER2 -> System.out.println("The second parameter should be a natural number");
                 case TWO_NUMBERS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)));
-                case THREE_INPUTS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)), util.inputValues.get(2));
-                case FOUR_INPUTS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)), util.inputValues.get(2), util.inputValues.get(3));
-                case MUTUALLY_EXCLUSIVE -> {
-                    System.out.println("The request contains mutually exclusive properties: [" + util.inputValues.get(2) + ", " + util.inputValues.get(3) + "]");
-                    System.out.println("There are no numbers with these properties");
-                }
+                case MULTIPLE_PROPS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)), util.props);
+                case MUTUALLY_EXCLUSIVE -> util.printMutually(util.props);
                 case ZERO -> System.exit(0);
 
 
@@ -100,6 +97,31 @@ public class Display {
             if (counter == length) {
                 foundNumbersWithProperties = true;
             }
+        }
+
+        for (Number number : numbersWithProperty) {
+            System.out.println(number.printNumber());
+        }
+    }
+
+    public void propertyOfList(long startNumber, long length, ArrayList<String> props) {
+        ArrayList<Number> numbersWithProperty = new ArrayList<>();
+        int counter = 0;
+        int propsFound = 0;
+        boolean foundNumbersWithProperties = false;
+
+        while (!foundNumbersWithProperties) {
+            Number numberToCheck = new Number(startNumber);
+            if (numberToCheck.getProps().containsAll(props)) {
+                numbersWithProperty.add(numberToCheck);
+                counter++;
+            }
+            if (counter == length) {
+                foundNumbersWithProperties = true;
+            }
+            System.out.println(numberToCheck.getNumber());
+            startNumber++;
+
         }
 
         for (Number number : numbersWithProperty) {

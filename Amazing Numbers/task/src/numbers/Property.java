@@ -9,5 +9,6 @@ public enum Property {
     GAPFUL,
     SPY,
     SUNNY,
-    SQUARE
+    SQUARE,
+    JUMPING
 }

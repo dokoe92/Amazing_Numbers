@@ -7,77 +7,79 @@ import java.util.InputMismatchException;
 public class Util {
 
     ArrayList<String> inputValues;
+    ArrayList<String> props;
 
     public Util() {
-        inputValues = new ArrayList<>();
+        this.inputValues = new ArrayList<>();
+        this.props = new ArrayList<>();
+
     }
+
 
     public Request processInput(String input) {
         inputValues.clear();
+        props.clear();
         String[] splitInput = input.split(" ");
         Collections.addAll(inputValues, splitInput);
 
         int numberOfValues = inputValues.size();
 
-        switch (numberOfValues) {
-            case 1:
-                if (isValidNumber(inputValues.get(0))) {
-                    long value1Single = parseToLong(inputValues.get(0));
+        if (numberOfValues < 3) {
+            switch (numberOfValues) {
+                case 1:
+                    if (isValidNumber(inputValues.get(0))) {
+                        long value1Single = parseToLong(inputValues.get(0));
 
-                    if (value1Single == 0) {
-                        return Request.ZERO;
-                    }
-                    if (value1Single < 0) {
-                        return Request.INVALID_NUMBER1;
-                    } else {
-                        return Request.ONE_NUMBER;
-                    }
-                } else {
-                    return Request.INVALID_NUMBER1;
-                }
-
-
-            case 2:
-                if (isValidNumber(inputValues.get(1))) {
-                    if (parseToLong(inputValues.get(1)) < 0) {
-                        return Request.INVALID_NUMBER2;
-                    } else {
-                        return Request.TWO_NUMBERS;
-                    }
-                } else {
-                    return Request.INVALID_NUMBER2;
-                }
-            case 3:
-                if (isValidNumber(inputValues.get(1))) {
-
-                    if (isValidProperty(inputValues.get(2).toUpperCase())) {
-                        return Request.THREE_INPUTS;
-                    } else {
-                        return Request.INVALID_PROPERTY;
-                    }
-                } else {
-                    return Request.INVALID_NUMBER2;
-                }
-            case 4:
-                if (isValidNumber(inputValues.get(1))) {
-                    if (isValidProperty(inputValues.get(2), inputValues.get(3))) {
-                        if (!isMutually(inputValues.get(2), inputValues.get(3))) {
-                            return Request.FOUR_INPUTS;
+                        if (value1Single == 0) {
+                            return Request.ZERO;
+                        }
+                        if (value1Single < 0) {
+                            return Request.INVALID_NUMBER1;
                         } else {
-                            return Request.MUTUALLY_EXCLUSIVE;
+                            return Request.ONE_NUMBER;
                         }
                     } else {
-                        return Request.INVALID_PROPERTY;
+                        return Request.INVALID_NUMBER1;
                     }
 
-                } else {
-                    return Request.INVALID_NUMBER2;
-                }
-            default:
-                return Request.EMPTY;
-        }
 
+                case 2:
+                    if (isValidNumber(inputValues.get(1))) {
+                        if (parseToLong(inputValues.get(1)) < 0) {
+                            return Request.INVALID_NUMBER2;
+                        } else {
+                            return Request.TWO_NUMBERS;
+                        }
+                    } else {
+                        return Request.INVALID_NUMBER2;
+                    }
+            }
+        } else if (isValidNumber(inputValues.get(1))) {
+            ArrayList<String> invalidProps = new ArrayList<>();
+            for (int i = 2; i < numberOfValues; i++) {
+                if (isValidProperty(inputValues.get(i))){
+                    this.props.add(inputValues.get(i).toUpperCase());
+                } else {
+                    invalidProps.add(inputValues.get(i).toUpperCase());
+                }
+            }
+            if (invalidProps.size() > 0) {
+                printOutInvalidProps(invalidProps);
+                return Request.INVALID_PROPERTY;
+            } else {
+                if (isMutually(this.props)) {
+                    printMutually(this.props);
+                    return Request.MUTUALLY_EXCLUSIVE;
+                } else {
+                    return Request.MULTIPLE_PROPS;
+                }
+            }
+        } else {
+            return Request.INVALID_NUMBER2;
+        }
+        return Request.EMPTY;
     }
+
 
 
     public boolean isValidNumber(String input) {
@@ -95,9 +97,20 @@ public class Util {
                 return true;
             }
         }
-        System.out.println("The property [" + prop + "] is wrong");
-        System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SUNNY, SQUARE EVEN, ODD]");
         return false;
+    }
+
+    public void printOutInvalidProps(ArrayList<String> props) {
+        if (props != null && props.size() == 1) {
+            String prop = props.get(0);
+            System.out.println("The property [" + prop + "] is wrong");
+            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SUNNY, JUMPING, SQUARE EVEN, ODD]");
+        }
+        StringBuilder sb = new StringBuilder("The properties [");
+        for (String prop : props) {
+            sb.append(prop).append(" ");
+        }
+        sb.append("] are wrong");
     }
 
 
@@ -127,6 +140,22 @@ public class Util {
             System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SUNNY, SQUARE EVEN, ODD]");
             return false;
         }
+    }
+
+    public boolean isMutually(ArrayList<String> props) {
+        return (props.contains("EVEN") && props.contains("ODD")) || (props.contains("DUCK") && props.contains("SPY")) || (props.contains("SUNNY") && props.contains("SQUARE)"));
+    }
+
+    public void printMutually(ArrayList<String> props) {
+        StringBuilder sb = new StringBuilder("The request contains mutually exclusive properties: [");
+        for (String prop : props) {
+            if (isMutually(props)) {
+                sb.append(prop).append(" ");
+            }
+        }
+        sb.append("]");
+        System.out.println(sb);
+        System.out.println("There are no numbers with these properties");
     }
 
     public boolean isMutually(String prop1, String prop2) {

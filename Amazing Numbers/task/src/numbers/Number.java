@@ -1,5 +1,6 @@
 package numbers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Number {
@@ -13,7 +14,9 @@ public class Number {
     private boolean isSpy;
     private boolean isSunny;
     private boolean isSquare;
+    private boolean isJumping;
     private HashMap<String, Boolean> properties;
+    private ArrayList<String> props;
 
     public Number(long number) {
         this.number = number;
@@ -26,8 +29,11 @@ public class Number {
         this.isSpy = NumberChecker.isSpy(this.number);
         this.isSunny = NumberChecker.isSunny(this.number);
         this.isSquare = NumberChecker.isSquare(this.number);
+        this.isJumping = NumberChecker.isJumping(this.number);
         this.properties = new HashMap<>();
         setProperties();
+        this.props = new ArrayList<>();
+        setProps();
     }
 
     public HashMap<String, Boolean> getProperties() {
@@ -38,17 +44,82 @@ public class Number {
         return number;
     }
 
-    public void setProperties() {
-        this.properties.put("EVEN", this.isEven);
-        this.properties.put("ODD", this.isOdd);
-        this.properties.put("BUZZ", this.isBuzz);
-        this.properties.put("DUCK", this.isDuck);
-        this.properties.put("PALINDROMIC", this.isPalindromic);
-        this.properties.put("GAPFUL", this.isGapful);
-        this.properties.put("SPY", this.isSpy);
-        this.properties.put("SUNNY", this.isSunny);
-        this.properties.put("SQUARE", this.isSquare);
+    public ArrayList<String> getProps() {
+        return this.props;
     }
+
+    public void setProperties() {
+        setEven();
+        setOdd();
+        setBuzz();
+        setDuck();
+        setPalindromic();
+        setGapful();
+        setSpy();
+        setSunny();
+        setSquare();
+    }
+
+    public void setProps(){
+        this.props.addAll(getProperties().keySet());
+    }
+
+    public void setEven () {
+        if (NumberChecker.isEven(this.number)) {
+            this.properties.put("EVEN", this.isEven);
+        }
+    }
+
+    public void setOdd() {
+        if (NumberChecker.isOdd(this.number)) {
+            this.properties.put("ODD", this.isOdd);
+        }
+    }
+
+    public void setBuzz() {
+        if (NumberChecker.isBuzz(this.number)) {
+            this.properties.put("BUZZ", this.isBuzz);
+        }
+    }
+
+    public void setDuck() {
+        if (NumberChecker.isDuck(this.number)) {
+            this.properties.put("DUCK", this.isDuck);
+        }
+    }
+
+    public void setPalindromic() {
+        if (NumberChecker.isPalindrom(this.number)) {
+            this.properties.put("PALINDROMIC", this.isPalindromic);
+        }
+    }
+
+    public void setGapful() {
+        if (NumberChecker.isGapful(this.number)) {
+            this.properties.put("GAPFUL", this.isGapful);
+        }
+    }
+
+    public void setSpy() {
+        if (NumberChecker.isSpy(this.number)) {
+            this.properties.put("SPY", this.isSpy);
+        }
+    }
+
+    public void setSunny() {
+        if (NumberChecker.isSunny(this.number)) {
+            this.properties.put("SUNNY", this.isSunny);
+        }
+    }
+
+    public void setSquare() {
+        if (NumberChecker.isSquare(this.number)) {
+            this.properties.put("SQUARE", this.isSquare);
+        }
+    }
+
+
+
 
     public StringBuilder printNumber() {
         StringBuilder sb = new StringBuilder();

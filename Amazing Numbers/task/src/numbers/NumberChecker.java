@@ -89,6 +89,19 @@ public class NumberChecker {
         double getRoot = Math.sqrt(input);
         return getRoot == (int) getRoot;
     }
+
+    public static boolean isJumping(long input) {
+        boolean isJumping = true;
+        while(input >= 10) {
+            int digit1 = (int) input % 10;
+            input = input / 10;
+            int digit2 = (int) input % 10;
+            if (Math.abs(digit1 - digit2) != 0) {
+                isJumping = false;
+            }
+        }
+        return isJumping;
+    }
 }
 
 
