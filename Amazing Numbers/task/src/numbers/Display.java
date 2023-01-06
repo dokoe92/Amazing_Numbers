@@ -72,6 +72,7 @@ public class Display {
         System.out.println("spy: " + NumberChecker.isSpy(input));
         System.out.println("sunny: " + NumberChecker.isSunny(input));
         System.out.println("square: " + NumberChecker.isSquare(input));
+        System.out.println("jumping: " + NumberChecker.isJumping(input));
     }
 
     public void propertyOfList(long startNumber, long length) {
@@ -119,7 +120,6 @@ public class Display {
             if (counter == length) {
                 foundNumbersWithProperties = true;
             }
-            System.out.println(numberToCheck.getNumber());
             startNumber++;
 
         }
@@ -162,8 +162,9 @@ public class Display {
         String spy = NumberChecker.isSpy(number) ? "spy" : "";
         String sunny = NumberChecker.isSunny(number) ? "sunny" : "";
         String square = NumberChecker.isSquare(number) ? "square" : "";
+        String jumping = NumberChecker.isJumping(number) ? "jumping" : "";
 
-        System.out.println(number + " is " + buzz + " " + duck + " " + palindrom + " " + gapful + " " + spy + " " + sunny + " " + square + " " +  even + " " + odd);
+        System.out.println(number + " is " + buzz + " " + duck + " " + palindrom + " " + gapful + " " + spy + " " + sunny + " " + jumping + " " + square + " " +  even + " " + odd);
     }
 
 }

@@ -58,6 +58,7 @@ public class Number {
         setSpy();
         setSunny();
         setSquare();
+        setJumping();
     }
 
     public void setProps(){
@@ -118,6 +119,12 @@ public class Number {
         }
     }
 
+    public void setJumping() {
+        if(NumberChecker.isJumping(this.number)) {
+            this.properties.put("JUMPING", this.isSquare);
+        }
+    }
+
 
 
 
@@ -130,7 +137,8 @@ public class Number {
         sb.append(this.isGapful ? "gapful " : "");
         sb.append(this.isSpy ? "spy " : "");
         sb.append(this.isSunny ? "sunny " : "");
-        sb.append(this.isSquare ? "suare " : "");
+        sb.append(this.isSquare ? "square " : "");
+        sb.append(this.isJumping ? "jumping " : "");
         sb.append(this.isEven ? "even " : "");
         sb.append(this.isOdd ? "odd " : "");
 

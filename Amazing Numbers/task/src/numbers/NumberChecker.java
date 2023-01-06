@@ -96,7 +96,7 @@ public class NumberChecker {
             int digit1 = (int) input % 10;
             input = input / 10;
             int digit2 = (int) input % 10;
-            if (Math.abs(digit1 - digit2) != 0) {
+            if (Math.abs(digit1 - digit2) != 1) {
                 isJumping = false;
             }
         }
