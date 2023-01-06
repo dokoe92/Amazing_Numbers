@@ -68,7 +68,6 @@ public class Util {
                 return Request.INVALID_PROPERTY;
             } else {
                 if (isMutually(this.props)) {
-                    printMutually(this.props);
                     return Request.MUTUALLY_EXCLUSIVE;
                 } else {
                     return Request.MULTIPLE_PROPS;
@@ -147,7 +146,7 @@ public class Util {
     }
 
     public boolean isMutually(ArrayList<String> props) {
-        return (props.contains("EVEN") && props.contains("ODD")) || (props.contains("DUCK") && props.contains("SPY")) || (props.contains("SUNNY") && props.contains("SQUARE)"));
+        return (props.contains("EVEN") && props.contains("ODD")) || (props.contains("DUCK") && props.contains("SPY")) || (props.contains("SUNNY") && props.contains("SQUARE"));
     }
 
     public void printMutually(ArrayList<String> props) {

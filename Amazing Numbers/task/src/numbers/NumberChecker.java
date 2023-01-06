@@ -98,6 +98,7 @@ public class NumberChecker {
             int digit2 = (int) input % 10;
             if (Math.abs(digit1 - digit2) != 1) {
                 isJumping = false;
+                break;
             }
         }
         return isJumping;
