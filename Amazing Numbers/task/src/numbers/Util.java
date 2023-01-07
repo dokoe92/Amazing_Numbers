@@ -56,9 +56,15 @@ public class Util {
             }
         } else if (isValidNumber(inputValues.get(1))) {
             ArrayList<String> invalidProps = new ArrayList<>();
+            ArrayList<String> propsExclude = new ArrayList<>();
             for (int i = 2; i < numberOfValues; i++) {
                 if (isValidProperty(inputValues.get(i))){
-                    this.props.add(inputValues.get(i).toUpperCase());
+                    if (inputValues.get(i).contains("-")) {
+                        propsExclude.add(inputValues.get(i).toUpperCase());
+                        this.props.add(inputValues.get(i).toUpperCase());
+                    } else {
+                        this.props.add(inputValues.get(i).toUpperCase());
+                    }
                 } else {
                     invalidProps.add(inputValues.get(i).toUpperCase());
                 }
@@ -70,6 +76,7 @@ public class Util {
                 if (isMutually(this.props)) {
                     return Request.MUTUALLY_EXCLUSIVE;
                 } else {
+                    this.props.remove(propsExclude);
                     return Request.MULTIPLE_PROPS;
                 }
             }
@@ -92,7 +99,8 @@ public class Util {
 
     public boolean isValidProperty(String prop) {
         for (Property property : Property.values()) {
-            if (property.toString().equals(prop.toUpperCase())) {
+            String propToExcludeString = "-" + property;
+            if (property.toString().equals(prop.toUpperCase()) || propToExcludeString.equals(prop.toUpperCase())){
                 return true;
             }
         }
@@ -146,7 +154,7 @@ public class Util {
     }
 
     public boolean isMutually(ArrayList<String> props) {
-        return (props.contains("EVEN") && props.contains("ODD")) || (props.contains("DUCK") && props.contains("SPY")) || (props.contains("SUNNY") && props.contains("SQUARE"));
+        return (props.contains("EVEN") && props.contains("ODD")) || (props.contains("DUCK") && props.contains("SPY")) || (props.contains("SUNNY") && props.contains("SQUARE")) || (props.contains("SAD") && props.contains("HAPPY"));
     }
 
     public void printMutually(ArrayList<String> props) {

@@ -24,7 +24,7 @@ public class Display {
         System.out.println(" * the first parameter represents a starting number");
         System.out.println(" * the second parameters shows how many consecutive numbers are to be processed");
         System.out.println("- two natural numbers and a property to search for");
-        System.out.println("- two natural numbers and two properties to search for;");
+        System.out.println("- a property preceded by minus must not be present in numbers");
         System.out.println("- separate the parameters with one space");
         System.out.println("- enter 0 to exit");
 
@@ -59,27 +59,17 @@ public class Display {
         }
 
     }
-
-
     public void propertyOf(Long input) {
-        System.out.println("Properties of " + input);
-        System.out.println("buzz: " + NumberChecker.isBuzz(input));
-        System.out.println("duck: " + NumberChecker.isDuck(input));
-        System.out.println("palindromic: " + NumberChecker.isPalindrom(input));
-        System.out.println("even: " + NumberChecker.isEven(input));
-        System.out.println("odd: " + NumberChecker.isOdd(input));
-        System.out.println("gapful: " + NumberChecker.isGapful(input));
-        System.out.println("spy: " + NumberChecker.isSpy(input));
-        System.out.println("sunny: " + NumberChecker.isSunny(input));
-        System.out.println("square: " + NumberChecker.isSquare(input));
-        System.out.println("jumping: " + NumberChecker.isJumping(input));
+        Number number = new Number(input);
+        System.out.println("test");
+        System.out.println(number.printNumber());
     }
 
     public void propertyOfList(long startNumber, long length) {
         propertyOfListOutput(startNumber);
-        for (int i = 1; i < length; i++) {
-            long nextNumber = startNumber + i;
-            propertyOfListOutput(nextNumber);
+        for (long i = 0; i < length; i++) {
+            Number number = new Number(startNumber+i);
+            System.out.println(number.printNumber());
         }
     }
 
@@ -108,7 +98,6 @@ public class Display {
     public void propertyOfList(long startNumber, long length, ArrayList<String> props) {
         ArrayList<Number> numbersWithProperty = new ArrayList<>();
         int counter = 0;
-        int propsFound = 0;
         boolean foundNumbersWithProperties = false;
 
         while (!foundNumbersWithProperties) {
@@ -152,19 +141,9 @@ public class Display {
         }
     }
 
-    public void propertyOfListOutput(long number) {
-        String buzz = NumberChecker.isBuzz(number) ? "buzz" : "";
-        String duck = NumberChecker.isDuck(number) ? "duck" : "";
-        String palindrom = NumberChecker.isPalindrom(number) ? "palindromic" : "";
-        String gapful = NumberChecker.isGapful(number) ? "gapful" : "";
-        String even = NumberChecker.isEven(number) ? "even" : "";
-        String odd = NumberChecker.isOdd(number) ? "odd" : "";
-        String spy = NumberChecker.isSpy(number) ? "spy" : "";
-        String sunny = NumberChecker.isSunny(number) ? "sunny" : "";
-        String square = NumberChecker.isSquare(number) ? "square" : "";
-        String jumping = NumberChecker.isJumping(number) ? "jumping" : "";
-
-        System.out.println(number + " is " + buzz + " " + duck + " " + palindrom + " " + gapful + " " + spy + " " + sunny + " " + jumping + " " + square + " " +  even + " " + odd);
+    public void propertyOfListOutput(long input) {
+        Number number = new Number(input);
+        number.printNumber();
     }
 
 }

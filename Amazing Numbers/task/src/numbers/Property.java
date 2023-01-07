@@ -10,5 +10,7 @@ public enum Property {
     SPY,
     SUNNY,
     SQUARE,
-    JUMPING
+    JUMPING,
+    HAPPY,
+    SAD
 }

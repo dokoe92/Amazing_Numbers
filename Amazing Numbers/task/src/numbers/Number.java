@@ -15,6 +15,8 @@ public class Number {
     private boolean isSunny;
     private boolean isSquare;
     private boolean isJumping;
+    private boolean isHappy;
+    private boolean isSad;
     private HashMap<String, Boolean> properties;
     private ArrayList<String> props;
 
@@ -30,6 +32,7 @@ public class Number {
         this.isSunny = NumberChecker.isSunny(this.number);
         this.isSquare = NumberChecker.isSquare(this.number);
         this.isJumping = NumberChecker.isJumping(this.number);
+        setHappyUnhappy();
         this.properties = new HashMap<>();
         setProperties();
         this.props = new ArrayList<>();
@@ -59,6 +62,7 @@ public class Number {
         setSunny();
         setSquare();
         setJumping();
+        setHappyUnhappy();
     }
 
     public void setProps(){
@@ -125,6 +129,17 @@ public class Number {
         }
     }
 
+    public void setHappyUnhappy() {
+        boolean isHappy = NumberChecker.isHappy(this.number);
+        if (isHappy) {
+            this.isHappy = true;
+            this.isSad = false;
+        } else {
+            this.isHappy = false;
+            this.isSad = true;
+        }
+    }
+
 
 
 
@@ -139,9 +154,10 @@ public class Number {
         sb.append(this.isSunny ? "sunny " : "");
         sb.append(this.isSquare ? "square " : "");
         sb.append(this.isJumping ? "jumping " : "");
+        sb.append(this.isHappy ? "happy " : "");
+        sb.append(this.isSad ? "sad " : "");
         sb.append(this.isEven ? "even " : "");
         sb.append(this.isOdd ? "odd " : "");
-
         return sb;
 
     }
