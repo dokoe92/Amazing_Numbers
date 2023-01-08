@@ -63,9 +63,19 @@ public class Display {
     }
 
     public void propertyOf(Long input) {
-        Number number = new Number(input);
         System.out.println("Properties of " + input);
-        System.out.println(number.printNumber());
+        System.out.println("buzz: " + NumberChecker.isBuzz(input));
+        System.out.println("duck: " + NumberChecker.isDuck(input));
+        System.out.println("palindromic: " + NumberChecker.isPalindrom(input));
+        System.out.println("even: " + NumberChecker.isEven(input));
+        System.out.println("odd: " + NumberChecker.isOdd(input));
+        System.out.println("gapful: " + NumberChecker.isGapful(input));
+        System.out.println("spy: " + NumberChecker.isSpy(input));
+        System.out.println("sunny: " + NumberChecker.isSunny(input));
+        System.out.println("square: " + NumberChecker.isSquare(input));
+        System.out.println("jumping: " + NumberChecker.isJumping(input));
+        System.out.println("happy: " + NumberChecker.isHappy(input));
+        System.out.println("sad: " + (NumberChecker.isHappy(input) ? "false" : "true"));
     }
 
     public void propertyOfList(long startNumber, long length) {
