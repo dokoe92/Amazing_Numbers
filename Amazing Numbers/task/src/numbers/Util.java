@@ -1,5 +1,6 @@
 package numbers;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.InputMismatchException;
@@ -56,15 +57,9 @@ public class Util {
             }
         } else if (isValidNumber(inputValues.get(1))) {
             ArrayList<String> invalidProps = new ArrayList<>();
-            ArrayList<String> propsExclude = new ArrayList<>();
             for (int i = 2; i < numberOfValues; i++) {
-                if (isValidProperty(inputValues.get(i))){
-                    if (inputValues.get(i).contains("-")) {
-                        propsExclude.add(inputValues.get(i).toUpperCase());
-                        this.props.add(inputValues.get(i).toUpperCase());
-                    } else {
-                        this.props.add(inputValues.get(i).toUpperCase());
-                    }
+                if (isValidProperty(inputValues.get(i))) {
+                    this.props.add(inputValues.get(i).toUpperCase());
                 } else {
                     invalidProps.add(inputValues.get(i).toUpperCase());
                 }
@@ -76,7 +71,6 @@ public class Util {
                 if (isMutually(this.props)) {
                     return Request.MUTUALLY_EXCLUSIVE;
                 } else {
-                    this.props.remove(propsExclude);
                     return Request.MULTIPLE_PROPS;
                 }
             }
@@ -85,7 +79,6 @@ public class Util {
         }
         return Request.EMPTY;
     }
-
 
 
     public boolean isValidNumber(String input) {
@@ -99,8 +92,8 @@ public class Util {
 
     public boolean isValidProperty(String prop) {
         for (Property property : Property.values()) {
-            String propToExcludeString = "-" + property;
-            if (property.toString().equals(prop.toUpperCase()) || propToExcludeString.equals(prop.toUpperCase())){
+            String propToExcludeString = "-" + property.toString();
+            if (property.toString().equals(prop.toUpperCase()) || propToExcludeString.equals(prop.toUpperCase())) {
                 return true;
             }
         }
@@ -154,15 +147,109 @@ public class Util {
     }
 
     public boolean isMutually(ArrayList<String> props) {
-        return (props.contains("EVEN") && props.contains("ODD")) || (props.contains("DUCK") && props.contains("SPY")) || (props.contains("SUNNY") && props.contains("SQUARE")) || (props.contains("SAD") && props.contains("HAPPY"));
+        for (String prop : props) {
+            String propWithoutMinus = "";
+            String propWithMinus = "";
+            if (prop.contains("-")) {
+                propWithMinus = prop;
+                propWithoutMinus = prop.replace("-", "");
+            } else {
+                propWithMinus = "-" + prop;
+                propWithoutMinus = prop;
+            }
+            if (props.contains(propWithMinus) && props.contains(propWithoutMinus)) {
+                return true;
+            }
+        }
+        if ((props.contains("EVEN") && props.contains("ODD")) || (props.contains("DUCK") && props.contains("SPY")) || (props.contains("SUNNY") && props.contains("SQUARE")) || (props.contains("SAD") && props.contains("HAPPY"))) {
+            return true;
+        } else if ((props.contains("-EVEN") && props.contains("-ODD")) || (props.contains("-DUCK") && props.contains("-SPY")) || (props.contains("-SUNNY") && props.contains("-SQUARE")) || (props.contains("-SAD") && props.contains("-HAPPY"))) {
+            return true;
+        }
+        return false;
     }
+
+    public boolean isMutually(String prop) {
+        String propWithoutMinus = "";
+        String propWithMinus = "";
+        if (prop.contains("-")) {
+            propWithMinus = prop;
+            propWithoutMinus = prop.replace("-", "");
+        } else {
+            propWithMinus = "-" + prop;
+            propWithoutMinus = prop;
+        }
+        if (this.props.contains(propWithMinus) && this.props.contains(propWithoutMinus)) {
+            return true;
+        }
+
+        if (prop.equals("EVEN") && this.props.contains("ODD")) {
+            return true;
+        }
+        if (prop.equals("ODD") && this.props.contains("EVEN")) {
+            return true;
+        }
+        if (prop.equals("DUCK") && this.props.contains("SPY")) {
+            return true;
+        }
+        if (prop.equals("SPY") && this.props.contains("DUCK")) {
+            return true;
+        }
+        if (prop.equals("SUNNY") && this.props.contains("SQUARE")) {
+            return true;
+        }
+        if (prop.equals("SQUARE") && this.props.contains("SUNNY")) {
+            return true;
+        }
+        if (prop.equals("SAD") && this.props.contains("HAPPY")) {
+            return true;
+        }
+        if (prop.equals("HAPPY") && this.props.contains("SAD")) {
+            return true;
+        }
+
+        if (prop.equals("-EVEN") && this.props.contains("-ODD")) {
+            return true;
+        }
+        if (prop.equals("-ODD") && this.props.contains("-EVEN")) {
+            return true;
+        }
+        if (prop.equals("-DUCK") && this.props.contains("-SPY")) {
+            return true;
+        }
+        if (prop.equals("-SPY") && this.props.contains("-DUCK")) {
+            return true;
+        }
+        if (prop.equals("-SUNNY") && this.props.contains("-SQUARE")) {
+            return true;
+        }
+        if (prop.equals("-SQUARE") && this.props.contains("-SUNNY")) {
+            return true;
+        }
+        if (prop.equals("-SAD") && this.props.contains("-HAPPY")) {
+            return true;
+        }
+        if (prop.equals("-HAPPY") && this.props.contains("-SAD")) {
+            return true;
+        }
+
+        return false;
+
+
+}
+
 
     public void printMutually(ArrayList<String> props) {
         StringBuilder sb = new StringBuilder("The request contains mutually exclusive properties: [");
+        ArrayList<String> mutuallyProps = new ArrayList<>();
         for (String prop : props) {
-            if (isMutually(props)) {
-                sb.append(prop).append(" ");
+            if (isMutually(prop)) {
+                System.out.println(prop);
+                mutuallyProps.add(prop);
             }
+        }
+        for (String prop : mutuallyProps) {
+            sb.append(prop).append(" ");
         }
         sb.append("]");
         System.out.println(sb);
