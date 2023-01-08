@@ -68,6 +68,8 @@ public class Number {
         this.props.addAll(getProperties().keySet());
     }
 
+
+
     public void setEven () {
         if (NumberChecker.isEven(this.number)) {
             this.properties.put("EVEN", this.isEven);

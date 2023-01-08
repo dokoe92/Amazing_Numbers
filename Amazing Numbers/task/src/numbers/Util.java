@@ -9,10 +9,12 @@ public class Util {
 
     ArrayList<String> inputValues;
     ArrayList<String> props;
+    ArrayList<String> propsToExclude;
 
     public Util() {
         this.inputValues = new ArrayList<>();
         this.props = new ArrayList<>();
+        this.propsToExclude = new ArrayList<>();
 
     }
 
@@ -20,6 +22,7 @@ public class Util {
     public Request processInput(String input) {
         inputValues.clear();
         props.clear();
+        propsToExclude.clear();
         String[] splitInput = input.split(" ");
         Collections.addAll(inputValues, splitInput);
 
@@ -60,6 +63,9 @@ public class Util {
             for (int i = 2; i < numberOfValues; i++) {
                 if (isValidProperty(inputValues.get(i))) {
                     this.props.add(inputValues.get(i).toUpperCase());
+                    if (inputValues.get(i).toUpperCase().contains("-")) {
+                        propsToExclude.add(inputValues.get(i).toUpperCase());
+                    }
                 } else {
                     invalidProps.add(inputValues.get(i).toUpperCase());
                 }
@@ -71,6 +77,8 @@ public class Util {
                 if (isMutually(this.props)) {
                     return Request.MUTUALLY_EXCLUSIVE;
                 } else {
+                    this.props.removeAll(propsToExclude);
+                    this.propsToExclude = removeMinusFromExcludedProp(this.propsToExclude);
                     return Request.MULTIPLE_PROPS;
                 }
             }
@@ -80,6 +88,14 @@ public class Util {
         return Request.EMPTY;
     }
 
+    public ArrayList<String> removeMinusFromExcludedProp(ArrayList<String> listWithMinus) {
+        ArrayList<String> listWithoutMinus = new ArrayList<>();
+        for (String prop : listWithMinus) {
+            String withoutMinus = prop.replace("-","");
+            listWithoutMinus.add(withoutMinus);
+        }
+        return listWithoutMinus;
+    }
 
     public boolean isValidNumber(String input) {
         try {
@@ -163,7 +179,7 @@ public class Util {
         }
         if ((props.contains("EVEN") && props.contains("ODD")) || (props.contains("DUCK") && props.contains("SPY")) || (props.contains("SUNNY") && props.contains("SQUARE")) || (props.contains("SAD") && props.contains("HAPPY"))) {
             return true;
-        } else if ((props.contains("-EVEN") && props.contains("-ODD")) || (props.contains("-DUCK") && props.contains("-SPY")) || (props.contains("-SUNNY") && props.contains("-SQUARE")) || (props.contains("-SAD") && props.contains("-HAPPY"))) {
+        } else if ((props.contains("-EVEN") && props.contains("-ODD"))) {
             return true;
         }
         return false;

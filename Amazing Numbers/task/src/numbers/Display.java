@@ -20,10 +20,10 @@ public class Display {
         System.out.println("Welcome to Amazing Numbers!");
         System.out.println("Supported requests: ");
         System.out.println("- enter a natural number to know its properties");
-        System.out.println("- enter two natural numbers to obtain the properties of the list");
+        System.out.println("- enter two natural numbers to obtain the properties of the list:");
         System.out.println(" * the first parameter represents a starting number");
-        System.out.println(" * the second parameters shows how many consecutive numbers are to be processed");
-        System.out.println("- two natural numbers and a property to search for");
+        System.out.println(" * the second parameter shows how many consecutive numbers are to be printed");
+        System.out.println("- two natural numbers and properties to search for");
         System.out.println("- a property preceded by minus must not be present in numbers");
         System.out.println("- separate the parameters with one space");
         System.out.println("- enter 0 to exit");
@@ -37,8 +37,10 @@ public class Display {
                 case INVALID_NUMBER1 -> System.out.println("The first parameter should be a natural number or zero.");
                 case ONE_NUMBER -> propertyOf(util.parseToLong(util.inputValues.get(0)));
                 case INVALID_NUMBER2 -> System.out.println("The second parameter should be a natural number");
-                case TWO_NUMBERS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)));
-                case MULTIPLE_PROPS -> propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)), util.props);
+                case TWO_NUMBERS ->
+                        propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)));
+                case MULTIPLE_PROPS ->
+                        propertyOfList(util.parseToLong(util.inputValues.get(0)), util.parseToLong(util.inputValues.get(1)), util.props);
                 case MUTUALLY_EXCLUSIVE -> util.printMutually(util.props);
                 case ZERO -> System.exit(0);
 
@@ -59,16 +61,17 @@ public class Display {
         }
 
     }
+
     public void propertyOf(Long input) {
         Number number = new Number(input);
-        System.out.println("test");
+        System.out.println("Properties of " + input);
         System.out.println(number.printNumber());
     }
 
     public void propertyOfList(long startNumber, long length) {
         propertyOfListOutput(startNumber);
         for (long i = 0; i < length; i++) {
-            Number number = new Number(startNumber+i);
+            Number number = new Number(startNumber + i);
             System.out.println(number.printNumber());
         }
     }
@@ -96,26 +99,44 @@ public class Display {
     }
 
     public void propertyOfList(long startNumber, long length, ArrayList<String> props) {
+        ArrayList<Number> numberList = new ArrayList<>();
         ArrayList<Number> numbersWithProperty = new ArrayList<>();
-        int counter = 0;
+
         boolean foundNumbersWithProperties = false;
 
         while (!foundNumbersWithProperties) {
             Number numberToCheck = new Number(startNumber);
-            if (numberToCheck.getProps().containsAll(props)) {
-                numbersWithProperty.add(numberToCheck);
-                counter++;
+            numberList.add(numberToCheck);
+            if (util.props.size() != 0) {
+                if (numberToCheck.getProps().containsAll(props)) {
+                    numbersWithProperty.add(numberToCheck);
+                }
+                if (numberToCheck.getProps().containsAll(util.propsToExclude) && util.propsToExclude.size() != 0) {
+                    numbersWithProperty.remove(numberToCheck);
+                }
+            } else {
+                for (String prop : util.propsToExclude) {
+                    if (numberToCheck.getProps().contains(prop)) {
+                        numberList.remove(numberToCheck);
+                    }
+                }
             }
-            if (counter == length) {
+            if (numbersWithProperty.size() == length || (numberList.size() == length && util.props.size() == 0)) {
                 foundNumbersWithProperties = true;
             }
             startNumber++;
 
         }
-
-        for (Number number : numbersWithProperty) {
-            System.out.println(number.printNumber());
+        if (numbersWithProperty.size() == 0) {
+            for (Number number : numberList) {
+                System.out.println(number.printNumber());
+            }
+        } else {
+            for (Number number : numbersWithProperty) {
+                System.out.println(number.printNumber());
+            }
         }
+
     }
 
     public void propertyOfList(long startNumber, long length, String property1, String property2) {
