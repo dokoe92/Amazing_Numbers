@@ -108,7 +108,6 @@ public class NumberChecker {
 
     public static boolean isHappy(long input) {
         long newNumber = 0;
-        ArrayList<Long> multiplesSad = new ArrayList<>();
 
          while (input > 0) {
             int digit = (int) input  % 10;

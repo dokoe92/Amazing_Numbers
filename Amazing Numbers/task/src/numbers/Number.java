@@ -32,7 +32,6 @@ public class Number {
         this.isSunny = NumberChecker.isSunny(this.number);
         this.isSquare = NumberChecker.isSquare(this.number);
         this.isJumping = NumberChecker.isJumping(this.number);
-        setHappyUnhappy();
         this.properties = new HashMap<>();
         setProperties();
         this.props = new ArrayList<>();
@@ -134,9 +133,11 @@ public class Number {
         if (isHappy) {
             this.isHappy = true;
             this.isSad = false;
+            this.properties.put("HAPPY", this.isHappy);
         } else {
             this.isHappy = false;
             this.isSad = true;
+            this.properties.put("SAD", this.isSad);
         }
     }
 

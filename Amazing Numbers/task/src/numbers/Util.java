@@ -111,7 +111,7 @@ public class Util {
         if (props != null && props.size() == 1) {
             String prop = props.get(0);
             System.out.println("The property [" + prop + "] is wrong");
-            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SUNNY, JUMPING, SQUARE EVEN, ODD]");
+            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SUNNY, JUMPING, HAPPY, SAD SQUARE EVEN, ODD]");
         } else {
             StringBuilder sb = new StringBuilder("The properties [");
             for (String prop : props) {
@@ -119,7 +119,7 @@ public class Util {
             }
             sb.append("] are wrong");
             System.out.println(sb);
-            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SUNNY, JUMPING, SQUARE EVEN, ODD]");
+            System.out.println("Available properties: [BUZZ, DUCK, PALINDROMIC, GAPFUL, SPY, SUNNY, JUMPING, HAPPY, SAD SQUARE EVEN, ODD]");
         }
 
     }
