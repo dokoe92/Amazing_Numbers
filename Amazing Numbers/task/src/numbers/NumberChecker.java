@@ -110,29 +110,22 @@ public class NumberChecker {
         long newNumber = 0;
 
          while (input > 0) {
-            int digit = (int) input  % 10;
+            long digit =  input  % 10;
             digit = digit * digit;
             newNumber += digit;
             input = input / 10;
         }
 
-        if (newNumber == 1 || newNumber == 10) {
+        if (newNumber == 1) {
             return true;
         }
-        if (isMultiple().contains(newNumber)) {
+        if (newNumber == 4) {
             return false;
         }
         return (isHappy(newNumber));
     }
 
-    private static ArrayList<Long> isMultiple() {
-        ArrayList<Long> multiplesOf10 = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            long multiple = 10 * i;
-            multiplesOf10.add(multiple);
-        }
-        return multiplesOf10;
-    }
+
 
 }
 
